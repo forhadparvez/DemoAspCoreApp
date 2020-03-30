@@ -1,6 +1,7 @@
 ﻿using DemoApp.Data;
 using DemoApp.Models;
 using DemoApp.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -21,6 +22,7 @@ namespace DemoApp.Controllers
 
 
         // GET: Semesters
+        [Authorize(Roles = UserRoles.Admin + ", " + UserRoles.Viewer)]
         public ActionResult Index()
         {
             var entities = _semesterRepository.GetAllSemester();
@@ -29,6 +31,7 @@ namespace DemoApp.Controllers
         }
 
         // GET: Semesters/Details/5
+        [Authorize(Roles = UserRoles.Admin + ", " + UserRoles.Viewer)]
         public ActionResult Details(int id)
         {
             var entity = _semesterRepository.FindById(id);
@@ -36,6 +39,7 @@ namespace DemoApp.Controllers
         }
 
         // GET: Semesters/Create
+        [Authorize(Roles = UserRoles.Admin)]
         public ActionResult Create()
         {
             ViewData["DepartmentId"] = new SelectList(_departmentRepository.GetAll(), "Id", "Name");
@@ -45,6 +49,7 @@ namespace DemoApp.Controllers
         // POST: Semesters/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = UserRoles.Admin)]
         public ActionResult Create(Semester entity)
         {
             try
@@ -65,6 +70,7 @@ namespace DemoApp.Controllers
         }
 
         // GET: Semesters/Edit/5
+        [Authorize(Roles = UserRoles.Admin)]
         public ActionResult Edit(int id)
         {
             ViewData["DepartmentId"] = new SelectList(_departmentRepository.GetAll(), "Id", "Name");
@@ -77,6 +83,7 @@ namespace DemoApp.Controllers
         // POST: Semesters/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = UserRoles.Admin)]
         public ActionResult Edit(int id, Semester entity)
         {
             try
@@ -94,6 +101,7 @@ namespace DemoApp.Controllers
         }
 
         // GET: Semesters/Delete/5
+        [Authorize(Roles = UserRoles.Admin)]
         public ActionResult Delete(int id)
         {
             var entity = _semesterRepository.FindById(id);
@@ -103,6 +111,7 @@ namespace DemoApp.Controllers
         // POST: Semesters/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = UserRoles.Admin)]
         public ActionResult Delete(int id, IFormCollection collection)
         {
             try

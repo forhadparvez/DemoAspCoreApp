@@ -1,5 +1,6 @@
 ﻿using DemoApp.Data;
 using DemoApp.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace DemoApp.Controllers
 {
+    [Authorize]
     public class DepartmentsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -17,12 +19,14 @@ namespace DemoApp.Controllers
         }
 
         // GET: Departments
+        [Authorize(Roles = UserRoles.Admin + ", " + UserRoles.Viewer)]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Departments.ToListAsync());
         }
 
         // GET: Departments/Details/5
+        [Authorize(Roles = UserRoles.Admin + ", " + UserRoles.Viewer)]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -41,6 +45,7 @@ namespace DemoApp.Controllers
         }
 
         // GET: Departments/Create
+        [Authorize(Roles = UserRoles.Admin)]
         public IActionResult Create()
         {
             return View();
@@ -51,6 +56,7 @@ namespace DemoApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = UserRoles.Admin)]
         public async Task<IActionResult> Create([Bind("Id,Code,Name,ShortName")] Department department)
         {
             if (ModelState.IsValid)
@@ -63,6 +69,7 @@ namespace DemoApp.Controllers
         }
 
         // GET: Departments/Edit/5
+        [Authorize(Roles = UserRoles.Admin)]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -83,6 +90,7 @@ namespace DemoApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = UserRoles.Admin)]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Code,Name,ShortName")] Department department)
         {
             if (id != department.Id)
@@ -114,6 +122,7 @@ namespace DemoApp.Controllers
         }
 
         // GET: Departments/Delete/5
+        [Authorize(Roles = UserRoles.Admin)]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -134,6 +143,7 @@ namespace DemoApp.Controllers
         // POST: Departments/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = UserRoles.Admin)]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var department = await _context.Departments.FindAsync(id);

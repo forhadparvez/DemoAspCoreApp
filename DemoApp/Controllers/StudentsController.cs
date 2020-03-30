@@ -1,6 +1,7 @@
 ﻿using DemoApp.Data;
 using DemoApp.Models;
 using DemoApp.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -22,6 +23,7 @@ namespace DemoApp.Controllers
             _semesterRepository = new SemesterRepository(context);
         }
 
+        [Authorize(Roles = UserRoles.Admin + ", " + UserRoles.Viewer)]
         public IActionResult Index()
         {
             var entity = _repository.GetAll();
@@ -30,6 +32,7 @@ namespace DemoApp.Controllers
 
 
         [HttpGet]
+        [Authorize(Roles = UserRoles.Admin)]
         public IActionResult Create(int? id)
         {
             ViewData["DepartmentId"] = new SelectList(_departmentRepository.GetAll(), "Id", "Name");
@@ -60,6 +63,7 @@ namespace DemoApp.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = UserRoles.Admin)]
         public IActionResult Create(Student entity)
         {
             ViewData["DepartmentId"] = new SelectList(_departmentRepository.GetAll(), "Id", "Name");

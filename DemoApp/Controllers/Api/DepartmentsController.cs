@@ -1,12 +1,11 @@
-﻿using System;
+﻿using DemoApp.Data;
+using DemoApp.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using DemoApp.Data;
-using DemoApp.Models;
 
 namespace DemoApp.Controllers.Api
 {
@@ -23,6 +22,7 @@ namespace DemoApp.Controllers.Api
 
         // GET: api/Departments
         [HttpGet]
+        [Authorize(Roles = UserRoles.Admin + ", " + UserRoles.Viewer)]
         public async Task<ActionResult<IEnumerable<Department>>> GetDepartments()
         {
             return await _context.Departments.ToListAsync();
@@ -30,6 +30,7 @@ namespace DemoApp.Controllers.Api
 
         // GET: api/Departments/5
         [HttpGet("{id}")]
+        [Authorize(Roles = UserRoles.Admin + ", " + UserRoles.Viewer)]
         public async Task<ActionResult<Department>> GetDepartment(int id)
         {
             var department = await _context.Departments.FindAsync(id);
@@ -46,6 +47,7 @@ namespace DemoApp.Controllers.Api
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPut("{id}")]
+        [Authorize(Roles = UserRoles.Admin)]
         public async Task<IActionResult> PutDepartment(int id, Department department)
         {
             if (id != department.Id)
@@ -78,6 +80,7 @@ namespace DemoApp.Controllers.Api
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPost]
+        [Authorize(Roles = UserRoles.Admin)]
         public async Task<ActionResult<Department>> PostDepartment(Department department)
         {
             _context.Departments.Add(department);
@@ -88,6 +91,7 @@ namespace DemoApp.Controllers.Api
 
         // DELETE: api/Departments/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = UserRoles.Admin)]
         public async Task<ActionResult<Department>> DeleteDepartment(int id)
         {
             var department = await _context.Departments.FindAsync(id);
