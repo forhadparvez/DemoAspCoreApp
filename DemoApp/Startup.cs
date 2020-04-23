@@ -1,4 +1,7 @@
 using DemoApp.Data;
+using jsreport.AspNetCore;
+using jsreport.Binary;
+using jsreport.Local;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -29,6 +32,11 @@ namespace DemoApp
                 .AddRoles<IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            services.AddJsReport(new LocalReporting()
+                .UseBinary(JsReportBinary.GetBinary())
+                .AsUtility()
+                .Create());
 
 
             // Register the Swagger generator, defining 1 or more Swagger documents

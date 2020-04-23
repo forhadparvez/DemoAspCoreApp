@@ -1,0 +1,73 @@
+﻿@model IEnumerable<DemoApp.Models.Student>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>View</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link href="~/lib/bootstrap/dist/css/bootstrap-lumen.css" rel="stylesheet" />
+    <link href="~/lib/toastr.js/toastr.css" rel="stylesheet" />
+    <link href="~/lib/datatables/css/jquery.dataTables.css" rel="stylesheet" />
+</head>
+<body>
+<div class="text-center">
+    <h2>Student List</h2><br/>
+    <table class="table table-bordered" style="width: 100%">
+        <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Roll)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContactNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Department)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Semester)
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Roll)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ContactNo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Department.Code)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Semester.Name)
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/lib/bootbox.js/bootbox.js"></script>
+<script src="~/lib/toastr.js/toastr.min.js"></script>
+<script src="~/lib/datatables/js/jquery.dataTables.js"></script>
+<script src="~/js/students/index.js"></script>
+</body>
+</html>
+

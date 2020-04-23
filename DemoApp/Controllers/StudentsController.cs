@@ -1,6 +1,8 @@
 ﻿using DemoApp.Data;
 using DemoApp.Models;
 using DemoApp.Repositories;
+using jsreport.AspNetCore;
+using jsreport.Types;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -30,6 +32,14 @@ namespace DemoApp.Controllers
             return View(entity);
         }
 
+
+        [MiddlewareFilter(typeof(JsReportPipeline))]
+        public IActionResult StudentListReport()
+        {
+            HttpContext.JsReportFeature().Recipe(Recipe.ChromePdf);
+            var entity = _repository.GetAll();
+            return View(entity);
+        }
 
         [HttpGet]
         [Authorize(Roles = UserRoles.Admin)]

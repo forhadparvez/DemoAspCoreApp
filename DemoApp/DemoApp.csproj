@@ -14,6 +14,9 @@
 
 
   <ItemGroup>
+    <PackageReference Include="jsreport.AspNetCore" Version="2.0.2" />
+    <PackageReference Include="jsreport.Binary" Version="2.4.0" />
+    <PackageReference Include="jsreport.Local" Version="2.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.1" />
